@@ -6,7 +6,7 @@
 
 > **怎么知道一个 Agent 是真的做对了，而不是看起来做对了。**
 
-所以几个项目里有一半的力气花在「怎么验证」上：工具调用能不能追溯到真实数据、评测的裁判自己可不可靠、一条规则到底生效没生效。
+所以几个项目里有一半的力气花在“怎么验证”上：工具调用能不能追溯到真实数据、评测的裁判自己可不可靠、一条规则到底生效没生效。
 
 ---
 
@@ -22,7 +22,7 @@
 多智能体差旅助手，AgentScope 2.0-Java + Spring Boot。主规划 Agent 带 4 个子 Agent，差标政策走知识库检索注入，答案可引出处。
 
 **[low-altitude-multi-uav-agent](https://github.com/ColeFang35/low-altitude-multi-uav-agent)**
-基于 LangGraph 的低空多机协同决策。把「谁让谁」从飞行员的临场判断，变成一套确定的排序规则。
+基于 LangGraph 的低空多机协同决策。把“谁让谁”从飞行员的临场判断，变成一套确定的排序规则。
 
 **[agentic-rl-lab](https://github.com/ColeFang35/agentic-rl-lab)** ／ **[lora-finetune-lab](https://github.com/ColeFang35/lora-finetune-lab)**
 后训练的两个小实验台。一个是把工具调用任务的成败做成可验证奖励，跑拒绝采样加 SFT 与 DPO；一个是 QLoRA 指令微调。
