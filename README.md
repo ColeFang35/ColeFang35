@@ -18,6 +18,9 @@
 **[llm-judge-eval](https://github.com/ColeFang35/llm-judge-eval)**
 面向 Agent 任务的评测框架。能程序精确判定的用代码判，只有开放式质量才交给模型打分；而且裁判本身也要先证明可信（Cohen's kappa、自一致性、位置偏见）。纯标准库实现，零依赖。
 
+**[rag-lab](https://github.com/ColeFang35/rag-lab)**
+检索质量的小实验台。把原来「关键词命中打分」的知识库检索换成 embedding 向量检索，先建评测再比较：同一套 18 条问题下 R@1 从 78% 到 94%，关键词漏掉的全是「用词和原文对不上」的口语问法。顺便量了分块方式和 cross-encoder 重排各自值不值，ONNX 跑 embedding，不需要 GPU 也不需要 API Key。
+
 **[aligo-travel-agent](https://github.com/ColeFang35/aligo-travel-agent)**
 多智能体差旅助手，AgentScope 2.0-Java + Spring Boot。主规划 Agent 带 4 个子 Agent，差标政策走知识库检索注入，答案可引出处。
 
