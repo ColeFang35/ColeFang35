@@ -8,11 +8,11 @@ I work on the engineering side of LLM agents. One question has taken most of my 
 
 > **How do you know an agent actually got it right — rather than just looking like it did?**
 
-So roughly half my effort goes into *verification*. The three small labs below weren't planned as a set; I kept running into the same class of problem while building projects, and eventually collected them here.
+So roughly half my effort goes into *verification*. The four small labs below weren't planned as a set; I kept running into the same class of problem while building projects, and eventually collected them here.
 
 ---
 
-### Three small labs
+### Four small labs
 
 **Retrieval · [rag-lab](https://github.com/ColeFang35/rag-lab)**
 
@@ -33,6 +33,14 @@ The one case that disagreed was a privacy violation: the user had given only the
 I set out to confirm a popular claim: that a model's self-reported confidence runs high and can't be used to set thresholds. It came out the other way — both DeepSeek models were *under*-confident on the hard tier.
 
 The more surprising result was a different one. The variant with the best-looking ECE on the hard tier (0.009) had only 27.3% accuracy. It wasn't well calibrated; it knew it was out of its depth, so its confidence stayed low even when it was wrong. Low ECE does not mean usable — something I hadn't appreciated at all going in.
+
+**Image consistency · [image-gen-eval-lab](https://github.com/ColeFang35/image-gen-eval-lab)**
+
+Text-to-image work is often acceptance-tested by using CLIP similarity as a proxy for "character consistency." I set out to show it can't actually separate the same character from a near-relative one — **and got it backwards: it separates them quite clearly.** Across 24 images (3 character prompts × 8 seeds), same-character pairs averaged 0.912, near-relatives differing only in hair colour averaged 0.867, and unrelated pairs 0.418 — AUC 0.920.
+
+But an AUC of 0.920 still doesn't make it usable. One layer down: at the best threshold (0.897) accuracy is only 0.870 — 4 of 28 same-character pairs missed, 8 of 64 near-relative pairs falsely flagged — and **the lowest same-character score (0.872) sits below the highest near-relative one (0.925)**. The two distributions overlap. The verdict is **fine as a coarse filter, not as an acceptance test**: it can cut 500 candidate images down to 50, but a human still has to look at those 50.
+
+The lesson is that a metric has to be asked about at three levels — **can it separate (AUC) / by how much (overlap) / how wrong at the threshold**. Looking good at the first level says nothing about the third.
 
 ---
 
