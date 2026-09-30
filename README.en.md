@@ -8,11 +8,11 @@ I work on the engineering side of LLM agents. One question has taken most of my 
 
 > **How do you know an agent actually got it right — rather than just looking like it did?**
 
-So roughly half my effort goes into *verification*. The five small labs below weren't planned as a set; I kept running into the same class of problem while building projects, and eventually collected them here.
+So roughly half my effort goes into *verification*. The six small labs below weren't planned as a set; I kept running into the same class of problem while building projects, and eventually collected them here.
 
 ---
 
-### Five small labs
+### Six small labs
 
 **Retrieval · [rag-lab](https://github.com/ColeFang35/rag-lab)**
 
@@ -41,6 +41,14 @@ Text-to-image work is often acceptance-tested by using CLIP similarity as a prox
 But an AUC of 0.920 still doesn't make it usable. One layer down: at the best threshold (0.897) accuracy is only 0.870 — 4 of 28 same-character pairs missed, 8 of 64 near-relative pairs falsely flagged — and **the lowest same-character score (0.872) sits below the highest near-relative one (0.925)**. The two distributions overlap. The verdict is **fine as a coarse filter, not as an acceptance test**: it can cut 500 candidate images down to 50, but a human still has to look at those 50.
 
 The lesson is that a metric has to be asked about at three levels — **can it separate (AUC) / by how much (overlap) / how wrong at the threshold**. Looking good at the first level says nothing about the third.
+
+**Cost · [kv-cache-lab](https://github.com/ColeFang35/kv-cache-lab)**
+
+An agent loop resends its whole history every turn. I knew prefix caching saves money, but I had never worked out how much, or when it stops working.
+
+The setup was crude: byte-identical messages, with a single per-turn timestamp moved around. Put it at the start of the system prompt and the cache hit rate drops to 0 — the same task costs 8x more. Put it in the last message and the hit rate is 89.8%, essentially the same as leaving it out. The middle case is the interesting one: 78.4% looks fine, but it decays to 71.6% as turns accumulate, because the timestamp sits ahead of the history and everything appended after it misses.
+
+I also corrected an assumption of my own: I expected a higher hit rate to mean lower latency. Measured anywhere from 0% to 89%, everything landed in the same band — **what you save is money, not time.** That went into the README as-is.
 
 **Frameworks · [langchain-agent-lab](https://github.com/ColeFang35/langchain-agent-lab)**
 
@@ -72,6 +80,6 @@ One turns tool-calling success and failure into a verifiable reward and runs rej
 
 ---
 
-I write both Python and Java. I use Claude Code as my main development tool day to day, and have packaged repeated workflows into reusable Skills.
+I write both Python and Java ([springcloud-demo](https://github.com/ColeFang35/springcloud-demo) is a minimal runnable SpringCloud example: Eureka registry + Gateway routing + OpenFeign calls). I use Claude Code as my main development tool day to day, and have packaged repeated workflows into reusable Skills.
 
 📮 fangchangchampion@gmail.com
