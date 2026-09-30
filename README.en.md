@@ -8,11 +8,11 @@ I work on the engineering side of LLM agents. One question has taken most of my 
 
 > **How do you know an agent actually got it right — rather than just looking like it did?**
 
-So roughly half my effort goes into *verification*. The four small labs below weren't planned as a set; I kept running into the same class of problem while building projects, and eventually collected them here.
+So roughly half my effort goes into *verification*. The five small labs below weren't planned as a set; I kept running into the same class of problem while building projects, and eventually collected them here.
 
 ---
 
-### Four small labs
+### Five small labs
 
 **Retrieval · [rag-lab](https://github.com/ColeFang35/rag-lab)**
 
@@ -41,6 +41,14 @@ Text-to-image work is often acceptance-tested by using CLIP similarity as a prox
 But an AUC of 0.920 still doesn't make it usable. One layer down: at the best threshold (0.897) accuracy is only 0.870 — 4 of 28 same-character pairs missed, 8 of 64 near-relative pairs falsely flagged — and **the lowest same-character score (0.872) sits below the highest near-relative one (0.925)**. The two distributions overlap. The verdict is **fine as a coarse filter, not as an acceptance test**: it can cut 500 candidate images down to 50, but a human still has to look at those 50.
 
 The lesson is that a metric has to be asked about at three levels — **can it separate (AUC) / by how much (overlap) / how wrong at the threshold**. Looking good at the first level says nothing about the third.
+
+**Frameworks · [langchain-agent-lab](https://github.com/ColeFang35/langchain-agent-lab)**
+
+I used to tell people to store memory explicitly and not rely on the model to find things in a long context. To check that claim, I ran LangChain's default memory against my own hand-written explicit memory: same tools, same questions, same model.
+
+On the easy set both got everything right and the only difference was cost — 3.9× on input. **On the harder set it flipped.** Six turns, four order IDs as distractors, references like "the earliest one" and "the one that hasn't shipped": my explicit memory got 3 of 6, LangChain got 5. My version only stored the most recently mentioned order ID, and those references turn on *semantic attributes*, not position — a positional rule fails outright.
+
+So the claim needs rewording: explicit memory saves a startling number of tokens (11×) but **a wrong extraction rule fails everything**; letting the model judge is more accurate at an order of magnitude more cost. The real call is to layer by reference type.
 
 ---
 
